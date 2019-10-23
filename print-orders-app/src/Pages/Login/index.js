@@ -1,14 +1,12 @@
-import React from 'react'
+import React, { useState } from 'react'
+import { useHistory } from 'react-router-dom'
 import {    TopBar,
             UUIDField,
             LoginCardActions as CardActions,
             LoginContainer as Container } from './styles'
 import CssBaseline from '@material-ui/core/CssBaseline';
-
 import Card from '@material-ui/core/Card';
-
 import CardContent from '@material-ui/core/CardContent';
-import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import Visibility from '@material-ui/icons/Visibility';
@@ -18,7 +16,9 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 
 function Login() {
-    const [values, setValues] = React.useState({
+    const history = useHistory()
+
+    const [values, setValues] = useState({
         uuid: '',
         showUuid: false,
         remember: false
@@ -26,6 +26,13 @@ function Login() {
 
     const handleChange = prop => event => {
         setValues({ ...values, [prop]: event.target.value })
+        if(checkUUIDLength(event.target.value)) doLogin(event.target.value)
+    }
+
+    const checkUUIDLength = value => value.length === 6
+
+    const doLogin = (uuid) => {
+        history.push('/dashboard')
     }
 
     const handleCheckboxChange = prop => event => {
@@ -71,7 +78,7 @@ function Login() {
                             />
                     </CardContent>
                     <CardActions>
-                        <Grid container justify="space-between">
+                        <Grid container>
                             <Grid item>
                                 <FormControlLabel
                                     control={
@@ -84,9 +91,6 @@ function Login() {
                                     }
                                     label="Manter-me conectado(a)"
                                 />
-                            </Grid>
-                            <Grid item>
-                                <Button variant="contained" color="primary">Conectar-se</Button>
                             </Grid>
                         </Grid>
                     </CardActions>

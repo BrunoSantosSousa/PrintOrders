@@ -1,15 +1,20 @@
 import React from 'react'
 import {
     BrowserRouter as Router,
-    Route
+    Route,
+    Switch
 } from 'react-router-dom'
 import Login from './Pages/Login'
+import Dashboard from './Pages/Dashboard'
 
 function App() {
   return (
-      <Router>
-        <Route path="/" component={Login} />
-      </Router>
+    <Router>
+        <Switch>
+            <Route path="/" exact component={Login} />
+            <Route path="/dashboard" component={Dashboard} />
+        </Switch>
+    </Router>
   )
 }
 
