@@ -1,10 +1,34 @@
 import React from 'react'
+import CssBaseline from '@material-ui/core/CssBaseline'
+import {
+    BrowserRouter as Router,
+    Switch,
+    Route,
+    useRouteMatch
+} from 'react-router-dom'
+import Nav from '../../Layout/Nav/'
+import {
+    PagePaper as Paper
+} from './styles'
+import Orders from '../Orders'
+import Admin from '../Admin'
 
 function Dashboard() {
+    const { path } = useRouteMatch()
+
     return (
-        <React.Fragment>
-            <h1>Dashboard Page</h1>
-        </React.Fragment>
+        <>
+            <CssBaseline/>
+            <Nav/>
+            <Paper square="true" elevation="2" >
+                <Switch>
+                    <Route exact path={path} component={Orders}></Route>
+                    <Route path={`${path}/orders`} component={Orders}></Route>
+                    <Route path={`${path}/admin`} component={Admin}></Route>
+                </Switch>
+            </Paper>
+
+        </>
     )
 }
 
