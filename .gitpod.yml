@@ -1,5 +1,6 @@
 ports:
   - port: 3000
+  - port: 8000
 image:
   file: .gitpod.dockerfile
 tasks:
@@ -9,6 +10,16 @@ tasks:
     command: >
       cd print-orders-app &&
       yarn start
+  - init: >
+      cd print-orders-api &&
+      composer intall
+    command: >
+      cd print-orders-api &&
+      pip install mysql-connector &&
+      pip install -U python-dotenv &&
+      python init.py &&
+      php artisan migrate &&
+      php -S localhost:8000 -t public
 vscode:
   extensions:
     - jpoissonnier.vscode-styled-components@0.0.26:mtMkjJrLDD5C2eLocxpWzg==
