@@ -12,7 +12,7 @@ tasks:
       yarn start
   - init: >
       cd print-orders-api &&
-      composer intall
+      composer install
     command: >
       cd print-orders-api &&
       pip install mysql-connector &&
