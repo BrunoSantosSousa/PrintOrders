@@ -20,7 +20,10 @@ export const Image = styled(ButtonBase)`
     @media screen and (max-width: 600px) {
         width: 100% !important;
         height: 90px;
+   asda
+
     }
+
 `
 
 export const SpanAbsolute = styled.span`
