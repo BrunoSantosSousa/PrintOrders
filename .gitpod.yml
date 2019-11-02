@@ -4,22 +4,24 @@ ports:
 image:
   file: .gitpod.dockerfile
 tasks:
-  - init: >
-      cd print-orders-app &&
-      yarn install
-    command: >
-      cd print-orders-app &&
-      yarn start
-  - init: >
-      cd print-orders-api &&
-      composer install
-    command: >
+  - before: cd print-orders-app
+    init: yarn install
+    command: yarn start
+  - before: >
       cd print-orders-api &&
       pip install mysql-connector &&
-      pip install -U python-dotenv &&
+      pip install -U python-dotenv
+    init: composer install
+    command: >
       python init.py &&
       php artisan migrate &&
       php -S localhost:8000 -t public
+  - before: >
+      cd print-orders-api &&
+      export PATH=$PATH:$(pwd)/vendor/phpunit/phpunit
+    command: >
+      gp await-port 8000 &&
+      phpunit
 vscode:
   extensions:
     - jpoissonnier.vscode-styled-components@0.0.26:mtMkjJrLDD5C2eLocxpWzg==
