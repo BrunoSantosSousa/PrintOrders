@@ -23,6 +23,8 @@ database = os.getenv("DB_DATABASE")
 username = os.getenv("DB_USERNAME")
 password = os.getenv("DB_PASSWORD")
 
+test_database = os.getenv("TEST_DATABASE")
+
 # Running connection to drop and create database
 try:
     connection = mysql.connector.connect(
@@ -33,6 +35,8 @@ try:
     cursor = connection.cursor()
     cursor.execute("DROP DATABASE IF EXISTS "+database+";")
     cursor.execute("CREATE DATABASE "+database+";")
+    cursor.execute("DROP DATABASE IF EXISTS "+test_database+";")
+    cursor.execute("CREATE DATABASE "+test_database+";")
     connection.close()
 except:
     print("Unnable to connect to mysql")
