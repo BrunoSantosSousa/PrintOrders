@@ -13,6 +13,12 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+
+        // Request Rules
+        $this->app->bind(\App\Http\RequestRules\AuthRequestRule::class);
+
+        // Services
+        $this->app->bind(\App\Services\IUidGenerator::class, \App\Services\UidGenerator::class);
+
     }
 }
