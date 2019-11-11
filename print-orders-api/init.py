@@ -1,7 +1,14 @@
-from dotenv import load_dotenv
+from dotenv import load_dotenv, set_key
 import os
 from shutil import copyfile
 import mysql.connector
+import random
+import string
+
+# Functions
+def random_string(string_length=32):
+    letters_digits = string.ascii_lowercase + string.digits
+    return ''.join(random.choice(letters_digits) for i in range(string_length))
 
 # COPY .env.example to .env
 current_path = os.getcwd()
@@ -14,6 +21,8 @@ except:
     exit(1)
 
 # Loading .env
+set_key('.env', 'APP_KEY', random_string())
+set_key('.env', 'JWT_SECRET', random_string())
 load_dotenv()
 
 # Initializing mysql environment variables

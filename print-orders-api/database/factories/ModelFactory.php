@@ -1,5 +1,7 @@
 <?php
 
+use App\Services\IUidGenerator;
+use Illuminate\Support\Facades\Crypt;
 /*
 |--------------------------------------------------------------------------
 | Model Factories
@@ -14,6 +16,8 @@
 $factory->define(App\User::class, function (Faker\Generator $faker) {
     return [
         'name' => $faker->name,
-        'uid' => 'a1b2C3',
+        'uid' => Crypt::encrypt(app(IUidGenerator::class)->generate()),
+        'role' => 'user',
+        'status' => 'active'
     ];
 });

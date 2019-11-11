@@ -16,5 +16,19 @@ $router->get('/', function () use ($router) {
 });
 
 $router->group(['prefix' => 'api'], function() use($router) {
-    $router->post('register', 'AuthController@post');
+    $router->post('auth', 'AuthController@post');
+
+    // Authenticated routes
+    $router->group(['middleware' => 'auth'], function() use($router) {
+
+        // Admin level routes
+        $router->group(['middleware' => 'admin-auth'], function() use ($router){
+            $router->post('user', 'UserController@post');
+        });
+
+        // User level routes
+
+
+    });
+
 });

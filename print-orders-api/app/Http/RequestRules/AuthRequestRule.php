@@ -5,9 +5,7 @@ class AuthRequestRule implements IRestfulRequestRule
 {
     public function getPostRules() : Array
     {
-        return [
-            'name' => 'required|string'
-        ];
+        return ['uid' => 'required|string'];
     }
 
     public function getPutRules() : Array
@@ -19,5 +17,4 @@ class AuthRequestRule implements IRestfulRequestRule
     {
         return [];
     }
-
 }

@@ -10,10 +10,10 @@ tasks:
   - before: >
       cd print-orders-api &&
       pip install mysql-connector &&
-      pip install -U python-dotenv
+      pip install -U python-dotenv &&
+      python init.py
     init: composer install
     command: >
-      python init.py &&
       php artisan migrate &&
       php -S localhost:8000 -t public
   - before: >
