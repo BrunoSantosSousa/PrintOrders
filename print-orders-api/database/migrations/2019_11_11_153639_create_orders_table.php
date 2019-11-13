@@ -17,7 +17,10 @@ class CreateOrdersTable extends Migration
             $table->increments('id');
             $table->integer('grade_id')->unsigned();
             $table->enum('type', ['xerox', 'book', 'test']);
+            $table->enum('status', ['pending', 'awaiting', 'done']);
+            $table->boolean('checked');
             $table->string('comments', 255);
+            $table->string('drive_path', 255);
             $table->foreign('grade_id')->references('id')->on('grades');
             $table->timestamps();
         });
