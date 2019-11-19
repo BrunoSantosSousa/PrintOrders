@@ -2,11 +2,13 @@
 namespace AppTest\Http;
 
 use AppTest\TestCase;
+use AppTest\Traits\AdminUserTrait;
 use Laravel\Lumen\Testing\DatabaseMigrations;
 
 class UserControllerTest extends TestCase
 {
     use DatabaseMigrations;
+    use AdminUserTrait;
 
     /**
      * User controller's post method MUST create a new user in database.
@@ -15,7 +17,7 @@ class UserControllerTest extends TestCase
      */
     public function testPostRequest()
     {
-        $user = factory(\App\User::class)->create(['role' => 'admin']);
+        $user = $this->getAdminUser();
         $data = [
             'name' => 'Roy Fielding',
             'role' => 'user'
