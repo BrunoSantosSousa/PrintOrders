@@ -4,7 +4,7 @@ namespace AppTest\RequestRules;
 use App\Http\RequestRules\UserRequestRule;
 use AppTest\TestCase;
 
-class UserRequestRulesTest extends TestCase
+class UserRequestRuleTest extends TestCase
 {
     public function testPostRules()
     {

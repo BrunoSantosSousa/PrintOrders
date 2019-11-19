@@ -4,7 +4,7 @@ namespace AppTest\RequestRules;
 use App\Http\RequestRules\AuthRequestRule;
 use AppTest\TestCase;
 
-class AuthRequestRulesTest extends TestCase
+class AuthRequestRuleTest extends TestCase
 {
 
     public function testPostRules()
