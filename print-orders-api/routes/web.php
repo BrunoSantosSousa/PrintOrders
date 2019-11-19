@@ -24,10 +24,13 @@ $router->group(['prefix' => 'api'], function() use($router) {
         // Admin level routes
         $router->group(['middleware' => 'admin-auth'], function() use ($router){
             $router->post('user', 'UserController@post');
+            $router->post('grade', 'GradeController@post');
+            $router->put('grade/{id}', 'GradeController@put');
+            $router->delete('grade/{id}', 'GradeController@delete');
         });
 
         // User level routes
-
+        $router->get('grade', 'GradeController@index');
 
     });
 

@@ -16,6 +16,7 @@ class AppServiceProvider extends ServiceProvider
 
         // Request Rules
         $this->app->bind(\App\Http\RequestRules\AuthRequestRule::class);
+        $this->app->bind(\App\Http\RequestRules\GradeRequestRule::class);
 
         // Services
         $this->app->bind(\App\Services\IUidGenerator::class, \App\Services\UidGenerator::class);

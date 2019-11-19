@@ -21,3 +21,22 @@ $factory->define(App\User::class, function (Faker\Generator $faker) {
         'status' => 'active'
     ];
 });
+
+$factory->define(App\Grade::class, function(Faker\Generator $faker) {
+    return [
+        'description' => $faker->randomElement([
+            'Maternal',
+            'Jardim I',
+            'Jardim II',
+            '1º Ano',
+            '2º Ano',
+            '3º Ano',
+            '4º Ano',
+            '5º Ano',
+            '6º Ano',
+            '7º Ano',
+            '8º Ano',
+            '9º Ano'
+        ])
+    ];
+});
