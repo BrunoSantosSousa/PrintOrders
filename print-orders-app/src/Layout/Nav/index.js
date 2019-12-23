@@ -7,13 +7,19 @@ import { Container,
          ImageBackdrop,
          ImageTitle,
          ImageMarked } from './styles'
+import { Permissions, CanSee } from '../../Auth/PermisionManager'
 
 // https://codesandbox.io/s/material-demo-4zqqb
 
 export default function Nav() {
+    
     const { url } = useRouteMatch()
     const history = useHistory()
 
+    if(!CanSee(Permissions.NAVBAR_FULL)) {
+        return null
+    }
+    
     const images = [
         {
             url: "https://cdn.searchenginejournal.com/wp-content/uploads/2018/03/4-things-seos-should-do-760x400.png",

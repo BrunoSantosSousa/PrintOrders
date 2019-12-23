@@ -25,12 +25,14 @@ class AuthController extends Controller
         if(!isset($user) || ! $user->isActive()) {
             return response()->json(['message' => 'Unauthorized'], 401);
         }
-        return $this->respondWithToken(Auth::login($user));
+        return $this->respondWithToken(Auth::login($user), $user);
     }
 
-    private function respondWithToken($token)
+    private function respondWithToken($token, $user)
     {
         return response()->json([
+            'name' => $user->name,
+            'role' => $user->role,
             'token' => $token,
             'token_type' => 'bearer',
             'expires_in' => Auth::factory()->getTTL() * 60
