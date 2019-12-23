@@ -1,83 +1,115 @@
 import React, { useState } from 'react'
 import { useHistory } from 'react-router-dom'
-import {    TopBar,
-            UUIDField,
-            LoginCardActions as CardActions,
-            LoginContainer as Container } from './styles'
-import CssBaseline from '@material-ui/core/CssBaseline';
-import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
-import IconButton from '@material-ui/core/IconButton';
-import InputAdornment from '@material-ui/core/InputAdornment';
-import Visibility from '@material-ui/icons/Visibility';
-import VisibilityOff from '@material-ui/icons/VisibilityOff';
-import Grid from '@material-ui/core/Grid';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
+import { makeStyles } from '@material-ui/core/styles'
 
-function Login() {
+import Container from '@material-ui/core/Container'
+import TextField from '@material-ui/core/TextField'
+import CardActions from '@material-ui/core/CardActions'
+
+import CssBaseline from '@material-ui/core/CssBaseline'
+import Card from '@material-ui/core/Card'
+import CardContent from '@material-ui/core/CardContent'
+import IconButton from '@material-ui/core/IconButton'
+import InputAdornment from '@material-ui/core/InputAdornment'
+import Visibility from '@material-ui/icons/Visibility'
+import VisibilityOff from '@material-ui/icons/VisibilityOff'
+import Grid from '@material-ui/core/Grid'
+import FormControlLabel from '@material-ui/core/FormControlLabel'
+import Checkbox from '@material-ui/core/Checkbox'
+import Auth from '../../Auth/Auth'
+
+const useStyles = makeStyles({
+    topBar: {
+        backgroundColor: '#9b0000',
+        height: '15em'
+    },
+    loginContainer: {
+        marginTop: '-5em'
+    },
+    uidField: {
+        width: '100%'
+    },
+    loginActions: {
+        margin: '0 10px'
+    }
+})
+
+function Login(props) {
     const history = useHistory()
+    const classes = useStyles()
+    
+    const {msg} = props
 
     const [values, setValues] = useState({
-        uuid: '',
-        showUuid: false,
+        uid: '',
+        showUid: false,
         remember: false
     })
 
     const handleChange = prop => event => {
         setValues({ ...values, [prop]: event.target.value })
-        if(checkUUIDLength(event.target.value)) doLogin(event.target.value)
+        if(checkUIDLength(event.target.value)) doLogin(event.target.value)
     }
 
-    const checkUUIDLength = value => value.length === 6
+    const checkUIDLength = value => value.length === 6
 
-    const doLogin = (uuid) => {
+    const doLogin = async (uid) => {
+        let authorized = await Auth.authenticate(uid)
+        if(!authorized) {
+            msg('Falha ao logar no sistema', 'error')
+            return
+        }
         history.push('/dashboard')
+        setTimeout(() => {
+            const authenticatedUser = Auth.getAuthenticatedUser()
+            msg(`Seja bem vindo(a) ${authenticatedUser.name}!`, 'success')
+        }, 200)
     }
 
     const handleCheckboxChange = prop => event => {
         setValues({ ...values, [prop]: event.target.checked })
     }
 
-    const handleClickShowUUID = () => {
-        setValues({ ...values, showUuid: !values.showUuid })
+    const handleClickShowUID = () => {
+        setValues({ ...values, showUid: !values.showUid })
     }
 
-    const handleMouseDownUUID = event => {
+    const handleMouseDownUID = event => {
         event.preventDefault()
     }
 
     return (
-        <React.Fragment>
+        <>
             <CssBaseline/>
-            <TopBar/>
-            <Container maxWidth="sm">
+            <div className={classes.topBar}></div>
+            <Container maxWidth="sm" className={classes.loginContainer} >
                 <Card>
                     <CardContent>
-                        <UUIDField
+                        <TextField
                             id="uuid"
+                            className={classes.uidField}
                             variant="outlined"
-                            type={values.showUuid ? 'text' : 'password' }
-                            label="UUID"
+                            type={values.showUid ? 'text' : 'password' }
+                            label="UID"
                             value={values.uuid}
-                            onChange={handleChange('uuid')}
+                            onChange={handleChange('uid')}
                             InputProps={{
                                 endAdornment: (
                                     <InputAdornment position="end">
                                         <IconButton
                                             edge="end"
                                             aria-label="Modificar visibilidade da senha"
-                                            onClick={handleClickShowUUID}
-                                            onMouseDown={handleMouseDownUUID}
+                                            onClick={handleClickShowUID}
+                                            onMouseDown={handleMouseDownUID}
                                         >
-                                            {values.showUuid ? <VisibilityOff/> : <Visibility/> }
+                                            {values.showUid ? <Visibility/> : <VisibilityOff/> }
                                         </IconButton>
                                     </InputAdornment>
                                 )
                             }}
                             />
                     </CardContent>
-                    <CardActions>
+                    <CardActions className={classes.loginActions}>
                         <Grid container>
                             <Grid item>
                                 <FormControlLabel
@@ -96,7 +128,7 @@ function Login() {
                     </CardActions>
                 </Card>
             </Container>
-        </React.Fragment>
+        </>
     )
 }
 
