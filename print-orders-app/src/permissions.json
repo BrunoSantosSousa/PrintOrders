@@ -1,0 +1,11 @@
+{
+    "Permissions" : {
+        "NAVBAR_FULL" : "navbar.full"
+    },
+    "user" : [
+        
+    ],
+    "admin" : [
+        "navbar.full"
+    ]
+}
