@@ -14,7 +14,7 @@ tasks:
       python init.py
     init: composer install
     command: >
-      php artisan migrate &&
+      php artisan migrate:fresh --seed &&
       php -S localhost:8000 -t public
   - before: >
       cd print-orders-api &&
