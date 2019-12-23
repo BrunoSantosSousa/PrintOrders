@@ -6,16 +6,28 @@ import {
 } from 'react-router-dom'
 import Login from './Pages/Login'
 import Dashboard from './Pages/Dashboard'
+import { AlertSnackBar, useAlert } from './Alert'
 
 function App() {
-  return (
-    <Router>
-        <Switch>
-            <Route path="/" exact component={Login} />
-            <Route path="/dashboard" component={Dashboard} />
-        </Switch>
-    </Router>
-  )
+    const [open, message, variant, handleClose, msg] = useAlert()
+
+    return (
+        <>
+            <Router>
+                <Switch>
+                    <Route path="/" exact component={() => <Login msg={msg} /> } />
+                    <Route path="/dashboard" component={() => <Dashboard msg={msg}/> } />
+                </Switch>
+            </Router>
+
+            <AlertSnackBar 
+                open={open}
+                message={message}
+                variant={variant}
+                handleClose={handleClose}
+            />
+        </>
+    )
 }
 
 export default App
