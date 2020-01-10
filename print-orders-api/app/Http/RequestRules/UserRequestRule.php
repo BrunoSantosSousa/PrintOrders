@@ -7,7 +7,7 @@ class UserRequestRule implements IRestfulRequestRule
     {
         return [
             'name' => 'required|string',
-            'role' => 'in:user,admin'
+            'role' => 'required|in:user,admin'
         ];
     }
 

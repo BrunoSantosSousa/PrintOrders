@@ -13,6 +13,6 @@ class UserRequestRuleTest extends TestCase
         $nameRule = $postRules['name'];
         $roleRule = $postRules['role'];
         $this->assertEquals('required|string', $nameRule);
-        $this->assertEquals('in:user,admin', $roleRule);
+        $this->assertEquals('required|in:user,admin', $roleRule);
     }
 }
