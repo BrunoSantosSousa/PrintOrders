@@ -17,7 +17,7 @@ class GradeController extends Controller
         try {
             return Grade::paginate(10);
         } catch (\Exception $e) {
-            return response()->json(['message', "Failed to load grade's data.", 'stack' => $e->getMessage()], 409);
+            return response()->json(['message' => "Failed to load grade's data.", 'stack' => $e->getMessage()], 409);
         }
     }
 
