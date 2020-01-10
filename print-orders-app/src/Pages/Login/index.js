@@ -16,7 +16,8 @@ import VisibilityOff from '@material-ui/icons/VisibilityOff'
 import Grid from '@material-ui/core/Grid'
 import FormControlLabel from '@material-ui/core/FormControlLabel'
 import Checkbox from '@material-ui/core/Checkbox'
-import Auth from '../../Auth/Auth'
+import Auth from '../../Auth'
+import { AlertSnackBar, useAlert } from '../../Alert'
 
 const useStyles = makeStyles({
     topBar: {
@@ -34,11 +35,11 @@ const useStyles = makeStyles({
     }
 })
 
-function Login(props) {
+function Login() {
     const history = useHistory()
     const classes = useStyles()
     
-    const {msg} = props
+    const [open, message, variant, handleClose, msg] = useAlert()
 
     const [values, setValues] = useState({
         uid: '',
@@ -128,6 +129,12 @@ function Login(props) {
                     </CardActions>
                 </Card>
             </Container>
+            <AlertSnackBar
+                open={open}
+                message={message}
+                variant={variant}
+                handleClose={handleClose}
+            />
         </>
     )
 }

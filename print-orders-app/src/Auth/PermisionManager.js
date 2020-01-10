@@ -1,5 +1,5 @@
 import PermissionsFile from '../permissions'
-import Auth from './Auth'
+import Auth from './index'
 
 export const Permissions = PermissionsFile.Permissions
 

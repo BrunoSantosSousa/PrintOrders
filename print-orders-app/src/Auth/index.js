@@ -35,11 +35,31 @@ export default {
     getAuthenticatedUser: function() {
         return JSON.parse(window.localStorage.getItem('authenticated_user'))
     },
+    getAuthorization: function() {
+        const authenticatedUser = this.getAuthenticatedUser()
+        return `${authenticatedUser.token_type} ${authenticatedUser.token}`
+    },
+    hasAuthenticatedUser: function() {
+        return Boolean(window.localStorage.getItem('authenticated_user'))
+    },
     isAuthenticatedSessionExpired: function() {
+        if(!this.hasAuthenticatedUser()) {
+            return false;
+        }
         const authenticatedUser = this.getAuthenticatedUser()
         const currentTimeMilis = (new Date()).getTime()
         const expirationTime = authenticatedUser.start_time + (authenticatedUser.expires_in * 1000)
-        return currentTimeMilis <= expirationTime
+        console.log('current time milis')
+        console.log(currentTimeMilis)
+        console.log('expiration time')
+        console.log(expirationTime)
+
+        const isExpired = expirationTime <= currentTimeMilis
+
+        console.log('isExpired')
+        console.log(isExpired)
+
+        return isExpired
     }
 
 }
