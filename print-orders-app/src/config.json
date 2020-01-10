@@ -3,6 +3,8 @@
         "API" : "https://8000-badaa55b-960c-4661-abb1-63fe8d155b36.ws-us02.gitpod.io"
     },
     "URI": {
-        "Auth" : "/api/auth"
+        "Auth" : "/api/auth",
+        "User" : "/api/user",
+        "Grade" : "/api/grade"
     }
 }
