@@ -10,7 +10,7 @@
     protected $settings = array(
         'origin' => '*',
         'allowMethods' => 'GET,HEAD,PUT,POST,DELETE,PATCH,OPTIONS',
-        'allowHeaders' => 'content-type, token',
+        'allowHeaders' => 'content-type, token, authorization',
         'exposeHeaders' => 'token'
     );
 
