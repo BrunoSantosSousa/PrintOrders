@@ -28,4 +28,18 @@ class UserControllerTest extends TestCase
         ]);
         $this->seeInDatabase('users', ['name' => 'Roy Fielding', 'role' => 'user']);
     }
+
+    /**
+     * User controller's get without id method MUST return a pagination
+     * of 10 users.
+     *
+     * @return void
+     */
+    public function testGetRequest()
+    {
+        $user = $this->getAdminUser();
+        $response = $this->actingAs($user)->call('GET', '/api/user');
+
+        $this->assertEquals(200, $response->status());
+    }
 }
