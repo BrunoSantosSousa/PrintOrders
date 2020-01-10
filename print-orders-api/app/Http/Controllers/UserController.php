@@ -18,6 +18,15 @@ class UserController extends Controller
         $this->uidGenerator = $uidGenerator;
     }
 
+    public function index(Request $request)
+    {
+        try {
+            return User::paginate(10);
+        } catch (\Exception $e) {
+            return response()->json(['message' => "Failed to load user's data."]);
+        }
+    }
+
     public function post(Request $request)
     {
         $this->validatePost($request);
