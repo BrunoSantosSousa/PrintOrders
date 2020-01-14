@@ -32,7 +32,7 @@ $router->group(['prefix' => 'api'], function() use($router) {
 
         // User level routes
         $router->get('grade', 'GradeController@index');
-
+        $router->get('user/{user}/grade', 'UserGradeController@index');
     });
 
 });
