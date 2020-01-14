@@ -29,6 +29,20 @@ const makeFetch = (fetch, url, options) => {
     })
 }
 
+const makeParams = (params) => {
+    let str = "?"
+    for(let key in params) {
+        if(params.hasOwnProperty(key)) {
+            str += `${key}=${params[key]}`
+        }
+    }
+    return str
+}
+
+const withParams = (url, params) => {
+    return `${url}${makeParams(params)}`
+}
+
 const checkAuthentication = () => {
     if(!Auth.hasAuthenticatedUser()) {
         throw "Usuário não autenticado."
@@ -41,14 +55,23 @@ const checkAuthentication = () => {
 
 export default function makeConnection(props) {
 
-    const {fetch, api, endpoint} = props
-    const url = `${api}${endpoint}`
+    const {fetch, api, endpoint, hasChild, rootId} = props
+    let url = ""
+    if(hasChild) {
+        let formattedEndPoint = endpoint.replace("{id}", rootId)
+        url = `${api}${formattedEndPoint}`
+    } else {
+        url = `${api}${endpoint}`
+    }
     const authorization = Auth.getAuthorization()
     
     return {
-        get: () => {
+        get: (params = null) => {
             checkAuthentication()
             const options = makeOptions('get', authorization)
+            if(params) {
+                return makeFetch(fetch, withParams(url, params), options)
+            }
             return makeFetch(fetch, url, options)
         },
         getById: (id) => {
