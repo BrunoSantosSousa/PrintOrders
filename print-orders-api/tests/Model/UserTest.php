@@ -4,6 +4,7 @@ namespace AppTest\Model;
 use AppTest\TestCase;
 use Laravel\Lumen\Testing\DatabaseMigrations;
 use Illuminate\Support\Facades\Crypt;
+use App\UserGrade;
 
 class UserTest extends TestCase
 {
@@ -58,5 +59,20 @@ class UserTest extends TestCase
         $activeUser = factory(\App\User::class)->create(['status' => 'active']);
         $this->assertFalse($inactiveUser->isActive());
         $this->assertTrue($activeUser->isActive());
+    }
+
+    /**
+     * Test user_grades function from user Model.
+     *
+     * @return void
+     */
+    public function testUserGrades()
+    {
+        $user = factory(\App\User::class)->create(['status' => 'active']);
+        $grade = factory(\App\Grade::class)->create();
+        UserGrade::create(['user_id' => $user->id, 'grade_id' => $grade->id]);
+        $userGrades = $user->user_grades;
+        $this->assertEquals($grade->id, $userGrades[0]->grade_id);
+        $this->assertEquals($user->id, $userGrades[0]->user_id);
     }
 }
