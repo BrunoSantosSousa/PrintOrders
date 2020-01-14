@@ -27,6 +27,8 @@ import DeleteIcon from '@material-ui/icons/Delete'
 import EditIcon from '@material-ui/icons/Edit'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import makeConnection from '../../Connection'
+import { makePagination } from '../../Layout/Stepper'
+import StepperList from '../../Layout/StepperList'
 
 import Config from '../../config'
 
@@ -36,14 +38,8 @@ const useUserDialogStyles = makeStyles({
     }
 })
 
-const userConnection = makeConnection({
-    fetch: fetch,
-    api: Config.URL.API,
-    endpoint: Config.URI.User
-})
-
 function UserDialog(props) {
-    const {open, setOpen, onSuccess, onError} = props
+    const {open, setOpen, handleRegister} = props
     const classes = useUserDialogStyles()
 
     const [state, setState] = useState({
@@ -57,16 +53,6 @@ function UserDialog(props) {
         return {
             name: state.name,
             role: state.admin ? 'admin' : 'user'
-        }
-    }
-
-    const handleRegister = async () => {
-        const response = await userConnection.post(formatState())
-        setOpen(false)
-        if(response.message && response.message === 'CREATED') {
-            onSuccess()
-        } else {
-            onError()
         }
     }
 
@@ -103,7 +89,7 @@ function UserDialog(props) {
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={handleClose} color="primary">Cancelar</Button>
-                    <Button onClick={handleRegister} color="primary">Registrar</Button>
+                    <Button onClick={handleRegister(formatState())} color="primary">Registrar</Button>
                 </DialogActions>
             </Dialog>
         </>
@@ -134,12 +120,12 @@ function UserItem(props) {
 }
 
 function UserList(props) {
-    const { records } = props
+    const { records, pagination, fetchData } = props
     return (
         <>
-            <List>
+            <StepperList pagination={pagination} fetchData={fetchData}>
                 { records.map((record, index) => <UserItem key={index} record={record} />) }
-            </List>
+            </StepperList>
         </>
     )
 }
@@ -166,11 +152,25 @@ export default function Users(props) {
 
     const [records, setRecords] = useState([])
     const [loading, setLoading] = useState(true)
+    const [pagination, setPagination] = useState({
+        steps: 1,
+        activeStep: 0
+    })
+
+    const userConnection = makeConnection({
+        fetch: fetch,
+        api: Config.URL.API,
+        endpoint: Config.URI.User
+    })
 
     const handleNewUserClick = () => setUserDialogOpen(true)
 
-    const fetchData = async () => {
-        const response = await userConnection.get()
+    const fetchData = async (param = null) => {
+        if(!loading) {
+            setLoading(true)
+        }
+        const response = await userConnection.get(param)
+        setPagination(makePagination(response))
         setRecords(response.data)
         setLoading(false)
     }
@@ -182,6 +182,16 @@ export default function Users(props) {
     }
 
     const handleRegisterFailure = () => msg('Falha ao registrar novo usuário!', 'error')
+
+    const handleRegister = data => async () => {
+        const response = await userConnection.post(data)
+        setUserDialogOpen(false)
+        if(response.message && response.message === 'CREATED') {
+            handlePostRegister()
+        } else {
+            handleRegisterFailure()
+        }
+    }
 
     useEffect(() => {
         fetchData()
@@ -203,11 +213,18 @@ export default function Users(props) {
             <UserDialog 
                 open={userDialogOpen} 
                 setOpen={setUserDialogOpen} 
-                onSuccess={handlePostRegister}
-                onError={handleRegisterFailure}
+                handleRegister={handleRegister}
             />
         
-            { loading ? <Loading /> : <UserList records={records} /> }           
+            { 
+                loading ? 
+                    <Loading /> : 
+                    <UserList 
+                        records={records}
+                        pagination={pagination}
+                        fetchData={fetchData}
+                    /> 
+            }           
         </>
     )
 }

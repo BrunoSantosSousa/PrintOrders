@@ -8,7 +8,7 @@ import makeConnection from '../../Connection'
 import Config from '../../config'
 import Box from '@material-ui/core/Box'
 import CircularProgress from '@material-ui/core/CircularProgress'
-import List from '@material-ui/core/List'
+
 import ListItem from '@material-ui/core/ListItem'
 import ListItemAvatar from '@material-ui/core/ListItemAvatar'
 import ListItemIcon from '@material-ui/core/ListItemIcon'
@@ -18,13 +18,8 @@ import Avatar from '@material-ui/core/Avatar'
 import IconButton from '@material-ui/core/IconButton'
 import ClassIcon from '@material-ui/icons/Class'
 import FindInPageIcon from '@material-ui/icons/FindInPage'
-
-const gradeConnection = makeConnection({
-    fetch: fetch,
-    api: Config.URL.API,
-    endpoint: Config.URI.Grade
-})
-
+import { makePagination } from '../../Layout/Stepper'
+import StepperList from '../../Layout/StepperList'
 
 function GradeItem(props) {
     const { record } = props
@@ -46,12 +41,12 @@ function GradeItem(props) {
 }
 
 function GradeList(props) {
-    const { records } = props
+    const { records, pagination, fetchData } = props
     return (
         <>
-            <List>
+            <StepperList pagination={pagination} fetchData={fetchData}>
                 { records.map((record, index) => <GradeItem key={index} record={record} /> ) }
-            </List>
+            </StepperList>
         </>
     )
 }
@@ -75,9 +70,23 @@ export default function Grades(props) {
     const { msg } = props
     const [records, setRecords] = useState([])
     const [loading, setLoading] = useState(true)
+    const [pagination, setPagination] = useState({
+        steps: 1,
+        activeStep: 0
+    })
+
+    const gradeConnection = makeConnection({
+        fetch: fetch,
+        api: Config.URL.API,
+        endpoint: Config.URI.Grade
+    })
     
-    const fetchData = async () => {
-        const response = await gradeConnection.get()
+    const fetchData = async (params = null) => {
+        if(!loading) {
+            setLoading(true)
+        }
+        const response = await gradeConnection.get(params)
+        setPagination(makePagination(response))
         setRecords(response.data)
         setLoading(false)
     }
@@ -100,7 +109,15 @@ export default function Grades(props) {
                 <AddIcon /> Nova Série
             </Fab>
 
-            { loading ? <Loading /> : <GradeList records={records} /> }
+            { 
+                loading ? 
+                    <Loading /> : 
+                    <GradeList 
+                        records={records} 
+                        pagination={pagination}
+                        fetchData={fetchData}
+                    /> 
+            }
         </>
     )
 }

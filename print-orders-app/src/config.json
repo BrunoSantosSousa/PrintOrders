@@ -5,6 +5,7 @@
     "URI": {
         "Auth" : "/api/auth",
         "User" : "/api/user",
-        "Grade" : "/api/grade"
+        "Grade" : "/api/grade",
+        "UserGrade" : "/api/user/{id}/grade"
     }
 }
