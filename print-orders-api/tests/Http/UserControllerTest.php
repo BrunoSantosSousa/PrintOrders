@@ -11,7 +11,7 @@ class UserControllerTest extends TestCase
     use AdminUserTrait;
 
     /**
-     * User controller's post method MUST create a new user in database.
+     * User controller post method MUST create a new user in database.
      *
      * @return void
      */
