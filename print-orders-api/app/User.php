@@ -76,4 +76,9 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
     {
         return $this->status === 'active';
     }
+
+    public function user_grades()
+    {
+        return $this->hasMany(UserGrade::class);
+    }
 }
