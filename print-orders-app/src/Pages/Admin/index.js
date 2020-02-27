@@ -6,7 +6,6 @@ import Tab from '@material-ui/core/Tab'
 import Typography from '@material-ui/core/Typography'
 import Box from '@material-ui/core/Box'
 
-import Orders from './Orders'
 import Reports from './Reports'
 import Users from './Users'
 import Grades from './Grades'
@@ -78,21 +77,17 @@ export default function Admin() {
                     aria-label="Vertical tabs"
                     className={classes.tabs}
                 >
-                    <Tab label="Pedidos" {...a11yProps(0)}/>
-                    <Tab label="Relatórios" {...a11yProps(1)}/>
-                    <Tab label="Usuários" {...a11yProps(2)}/>
-                    <Tab label="Séries" {...a11yProps(3)} />
+                    <Tab label="Relatórios" {...a11yProps(0)}/>
+                    <Tab label="Usuários" {...a11yProps(1)}/>
+                    <Tab label="Séries" {...a11yProps(2)} />
                 </Tabs>
                 <TabPanel value={value} index={0}>
-                    <Orders />
-                </TabPanel>
-                <TabPanel value={value} index={1}>
                     <Reports />
                 </TabPanel>
-                <TabPanel value={value} index={2}>
+                <TabPanel value={value} index={1}>
                     <Users msg={msg} />
                 </TabPanel>
-                <TabPanel value={value} index={3}>
+                <TabPanel value={value} index={2}>
                     <Grades msg={msg} />
                 </TabPanel>
             </div>

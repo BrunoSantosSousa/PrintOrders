@@ -97,14 +97,13 @@ export default function Grades(props) {
 
     return (
         <>
-            <Title>Séries</Title>
+            <Title margin={true}>Séries</Title>
 
             <Fab 
                 size="small"
                 color="primary"
                 variant="extended"
                 aria-label="add"
-                
             >
                 <AddIcon /> Nova Série
             </Fab>
