@@ -23,16 +23,35 @@ $router->group(['prefix' => 'api'], function() use($router) {
 
         // Admin level routes
         $router->group(['middleware' => 'admin-auth'], function() use ($router){
+            // User's routes
             $router->post('user', 'UserController@post');
             $router->get('user', 'UserController@index');
+            $router->put('user/{id}', 'UserController@put');
+
+            // Grade's routes
             $router->post('grade', 'GradeController@post');
             $router->put('grade/{id}', 'GradeController@put');
             $router->delete('grade/{id}', 'GradeController@delete');
+
+            // UserGrade's routes
+            $router->post('user/{userId}/grade/', 'UserGradeController@post');
+            $router->delete('user/{userId}/grade/{id}', 'UserGradeController@delete');
         });
 
         // User level routes
         $router->get('grade', 'GradeController@index');
-        $router->get('user/{user}/grade', 'UserGradeController@index');
+        $router->get('user/{userId}/grade', 'UserGradeController@index');
+
+        $router->get('order/', 'OrderController@index');
+
+        $router->post('order/xerox/', 'XeroxOrderController@post');
+        $router->put('order/xerox/{id}', 'XeroxOrderController@put');
+
+        $router->post('order/test/', 'TestOrderController@post');
+        $router->put('order/test/{id}', 'TestOrderController@put');
+
+        $router->post('order/book/', 'BookOrderController@post');
+        $router->put('order/book/{id}', 'BookOrderController@put');
     });
 
 });
