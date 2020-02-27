@@ -5,7 +5,7 @@ class UserGradeRequestRule implements IRestfulRequestRule
 {
     public function getPostRules() : Array
     {
-        return ['grade_id' => 'required|number'];
+        return ['grade_id' => 'required|numeric'];
     }
 
     public function getPutRules() : Array
