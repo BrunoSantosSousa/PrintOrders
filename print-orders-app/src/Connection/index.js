@@ -89,12 +89,13 @@ export default function makeConnection(props) {
             checkAuthentication()
             const options = makeOptions('put', authorization, data)
             const urlWithId = `${url}/${id}`
-            return makeFetch(fetch, url, options)
+            return makeFetch(fetch, urlWithId, options)
         },
         delete: (id) => {
             checkAuthentication()
             const options = makeOptions('delete', authorization)
-            return makeFetch(fetch, url, options)
+            const urlWithId = `${url}/${id}`
+            return makeFetch(fetch, urlWithId, options)
         }
     }
 }
