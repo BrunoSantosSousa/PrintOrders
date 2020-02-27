@@ -42,4 +42,20 @@ class UserControllerTest extends TestCase
 
         $this->assertEquals(200, $response->status());
     }
+
+    public function testPutRequest()
+    {
+        $admin = $this->getAdminUser();
+        $user = factory(\App\User::class)->create();
+        $data = [
+            'name' => 'Administrator',
+            'role' => 'admin'
+        ];
+        $response = $this->actingAs($admin)->json('PUT', "/api/user/{$user->id}", $data);
+        $response->seeJson([
+            'message' => 'UPDATED'
+        ]);
+        $this->seeInDatabase('users', ['name' => 'Administrator', 'role' => 'admin', 'id' => $user->id]);
+    }
+
 }
