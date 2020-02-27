@@ -35,6 +35,12 @@ class AppServiceProvider extends ServiceProvider
 
         // Services
         $this->app->bind(\App\Services\IUidGenerator::class, \App\Services\UidGenerator::class);
-
+        $this->app->bind(\App\Services\OrderService::class);
+        $this->app->bind(\App\Services\UserService::class);
+        $this->app->bind(\App\Services\OrderServiceFactory::class);
+        $this->app->bind(\App\Services\IOrderService::class, function($app) {
+            return $app->make(\App\Services\OrderServiceFactory::class)->create();
+        });
+        $this->app->bind(\App\Services\IUserGradeService::class, \App\Services\UserGradeService::class);
     }
 }
