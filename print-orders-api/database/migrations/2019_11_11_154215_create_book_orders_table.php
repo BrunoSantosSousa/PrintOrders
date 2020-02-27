@@ -16,7 +16,7 @@ class CreateBookOrdersTable extends Migration
         Schema::create('book_orders', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('order_id')->unsigned();
-            $table->string('book_name', 150);
+            $table->string('book_name', 200);
             $table->string('pages', 255);
             $table->foreign('order_id')->references('id')->on('orders');
             $table->timestamps();

@@ -20,7 +20,8 @@ class CreateOrdersTable extends Migration
             $table->enum('status', ['pending', 'awaiting', 'done']);
             $table->boolean('checked');
             $table->string('comments', 255);
-            $table->string('drive_path', 255);
+            $table->string('drive_path', 255)->default('');
+            $table->date('delivery_date');
             $table->foreign('grade_id')->references('id')->on('grades');
             $table->timestamps();
         });
