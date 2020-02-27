@@ -4,6 +4,6 @@ import Title from '../../Layout/Title/'
 export default function Reports() {
 
     return (
-        <Title>Relatórios</Title>
+        <Title margin={true}>Relatórios</Title>
     )
 }
