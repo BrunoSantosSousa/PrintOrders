@@ -6,6 +6,10 @@
         "Auth" : "/api/auth",
         "User" : "/api/user",
         "Grade" : "/api/grade",
-        "UserGrade" : "/api/user/{id}/grade"
+        "UserGrade" : "/api/user/{id}/grade",
+        "Order" : "/api/order",
+        "BookOrder" : "/api/order/book",
+        "XeroxOrder" : "/api/order/xerox",
+        "TestOrder" : "/api/order/test"
     }
 }
