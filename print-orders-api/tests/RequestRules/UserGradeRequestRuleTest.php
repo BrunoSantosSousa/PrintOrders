@@ -11,6 +11,6 @@ class UserGradeRequestRuleTest extends TestCase
         $userGradeRequestRule = app(UserGradeRequestRule::class);
         $postRules = $userGradeRequestRule->getPostRules();
         $gradeIdRule = $postRules['grade_id'];
-        $this->assertEquals('required|number', $gradeIdRule);
+        $this->assertEquals('required|numeric', $gradeIdRule);
     }
 }
