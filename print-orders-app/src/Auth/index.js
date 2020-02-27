@@ -49,16 +49,7 @@ export default {
         const authenticatedUser = this.getAuthenticatedUser()
         const currentTimeMilis = (new Date()).getTime()
         const expirationTime = authenticatedUser.start_time + (authenticatedUser.expires_in * 1000)
-        console.log('current time milis')
-        console.log(currentTimeMilis)
-        console.log('expiration time')
-        console.log(expirationTime)
-
         const isExpired = expirationTime <= currentTimeMilis
-
-        console.log('isExpired')
-        console.log(isExpired)
-
         return isExpired
     }
 
