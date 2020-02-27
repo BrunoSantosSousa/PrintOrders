@@ -43,4 +43,23 @@ class UserController extends Controller
             return response()->json(['message' => 'User registration failed!', 'stack' => $e->getMessage()], 409);
         }
     }
+
+    public function put(Request $request, $id)
+    {
+        $this->validatePut($request);
+        try {
+            $user = User::find($id);
+            $user->name = $request->input('name');
+            if($request->has('role')) {
+                $user->role = $request->input('role');
+            }
+            if($request->has('status')) {
+                $user->status = $request->input('status');
+            }
+            $user->save();
+            return response()->json(['user' => $user, 'message' => 'UPDATED']);
+        } catch (\Exception $e) {
+            return response()->json(['message' => 'User edit failed!', 'stack' => $e->getMessage()], 409);
+        }
+    }
 }
