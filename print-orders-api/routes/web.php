@@ -15,7 +15,10 @@ $router->get('/', function () use ($router) {
     return $router->app->version();
 });
 
+
+
 $router->group(['prefix' => 'api'], function() use($router) {
+
     $router->post('auth', 'AuthController@post');
 
     // Authenticated routes
@@ -46,12 +49,15 @@ $router->group(['prefix' => 'api'], function() use($router) {
 
         $router->post('order/xerox/', 'XeroxOrderController@post');
         $router->put('order/xerox/{id}', 'XeroxOrderController@put');
+        $router->get('order/xerox/{orderId}', 'XeroxOrderController@show');
 
+        $router->get('order/test/{order_id}', 'TestOrderController@show');
         $router->post('order/test/', 'TestOrderController@post');
         $router->put('order/test/{id}', 'TestOrderController@put');
 
         $router->post('order/book/', 'BookOrderController@post');
         $router->put('order/book/{id}', 'BookOrderController@put');
+        $router->get('order/book/{orderId}', 'BookOrderController@show');
     });
 
 });
