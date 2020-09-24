@@ -25,3 +25,4 @@ tasks:
 vscode:
   extensions:
     - jpoissonnier.vscode-styled-components@0.0.26:mtMkjJrLDD5C2eLocxpWzg==
+    - CoenraadS.bracket-pair-colorizer@1.0.61:+jQByqALW0iXkhpd2yzYzQ==
