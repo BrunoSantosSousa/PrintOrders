@@ -87,7 +87,7 @@ function Login() {
                 <Card>
                     <CardContent>
                         <TextField
-                            id="uuid"
+                            id="uid"
                             className={classes.uidField}
                             variant="outlined"
                             type={values.showUid ? 'text' : 'password' }
