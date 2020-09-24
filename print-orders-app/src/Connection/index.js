@@ -30,9 +30,13 @@ const makeFetch = (fetch, url, options) => {
 }
 
 const makeParams = (params) => {
+    let count = 0
     let str = "?"
     for(let key in params) {
         if(params.hasOwnProperty(key)) {
+            if(count++ !== 0) {
+                str += '&'
+            }
             str += `${key}=${params[key]}`
         }
     }
@@ -78,7 +82,7 @@ export default function makeConnection(props) {
             checkAuthentication()
             const options = makeOptions('get', authorization)
             const urlWithId = `${url}/${id}`
-            return makeFetch(fetch, url, options)
+            return makeFetch(fetch, urlWithId, options)
         },
         post: (data) => {
             checkAuthentication()
