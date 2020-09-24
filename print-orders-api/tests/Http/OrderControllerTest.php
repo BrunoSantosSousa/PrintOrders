@@ -10,6 +10,9 @@ class OrderControllerTest extends TestCase
     use DatabaseMigrations;
     use AdminUserTrait;
 
+    /**
+     * @group order
+     */
     public function testGetRequest()
     {
         $user = $this->getAdminUser();

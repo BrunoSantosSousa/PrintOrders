@@ -11,6 +11,14 @@ class XeroxOrderControllerTest extends TestCase
     use DatabaseMigrations;
     use AdminUserTrait;
 
+    public function testShowRequest()
+    {
+        $user = $this->getAdminUser();
+        $xeroxOrder = factory(\App\XeroxOrder::class)->create();
+        $response = $this->actingAs($user)->call('GET', "/api/order/xerox/{$xeroxOrder->order_id}");
+        $this->assertEquals(200, $response->status());
+    }
+
     public function testPostRequest()
     {
         $user = $this->getAdminUser();

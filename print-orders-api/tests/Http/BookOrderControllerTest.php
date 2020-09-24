@@ -10,6 +10,14 @@ class BookOrderControllerTest extends TestCase
     use DatabaseMigrations;
     use AdminUserTrait;
 
+    public function testShowRequest()
+    {
+        $user = $this->getAdminUser();
+        $bookOrder = factory(\App\BookOrder::class)->create();
+        $response = $this->actingAs($user)->call('GET', "/api/order/book/{$bookOrder->order_id}");
+        $this->assertEquals(200, $response->status());
+    }
+
     public function testPostRequest()
     {
         $user = $this->getAdminUser();
