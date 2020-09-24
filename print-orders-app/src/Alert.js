@@ -48,7 +48,7 @@ const useStyle = makeStyles(theme => ({
 
 function AlertSnackBarWrapper(props) {
     const classes = useStyle()
-    const { className, message, onClose, variant, ...other } = props
+    const { className, message, onClose, variant } = props
     const Icon = variantIcon[variant]
 
     return (
@@ -66,7 +66,7 @@ function AlertSnackBarWrapper(props) {
                     <CloseIcon className={classes.icon}/>
                 </IconButton>
             ]}
-            {...other}
+            
         />
     )
 }

@@ -22,13 +22,8 @@ export default {
         return false
     },
     setAuthenticatedUser: function(payload) {
-        const { name, role, token, token_type, expires_in } = payload
         window.localStorage.setItem('authenticated_user', JSON.stringify({
-            name: name,
-            role: role,
-            token: token,
-            token_type: token_type,
-            expires_in: expires_in,
+            ...payload,
             start_time: (new Date()).getTime()
         }))
     },
