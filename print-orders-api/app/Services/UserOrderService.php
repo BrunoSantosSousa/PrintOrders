@@ -31,7 +31,7 @@ class UserOrderService implements IOrderService
         $this->orderService->updateOrder($request, $orderId);
     }
 
-    public function filterOrders($statusList, $checked = null)
+    public function filterOrders($statusList, $start_date = null, $end_date = null)
     {
         $user = $this->auth->user();
         $gradeIdList = $this->userGradeService->listUserGradeId($user);
@@ -39,9 +39,9 @@ class UserOrderService implements IOrderService
         if(is_array($statusList) && count($statusList) > 0) {
             $query = $query->whereIn('status', $statusList);
         }
-        if($checked != null) {
-            $query = $query->where('checked', '=', $checked);
+        if(isset($start_date, $end_date)) {
+            $query->whereBetween('delivery_date', array($start_date, $end_date));
         }
-        return $query->paginate(10);
+        return $query->orderBy('delivery_date', 'desc')->paginate(9);
     }
 }

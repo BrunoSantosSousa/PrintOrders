@@ -36,7 +36,7 @@ class OrderService implements IOrderService
         $order->save();
     }
 
-    public function filterOrders($statusList, $checked = null) {
+    public function filterOrders($statusList, $start_date = null, $end_date = null) {
         throw new \Exception("Method is not implemented!");
     }
 

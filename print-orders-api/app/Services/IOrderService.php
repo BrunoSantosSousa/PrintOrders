@@ -25,5 +25,5 @@ interface IOrderService
      *
      * @return collection
      */
-    public function filterOrders($statusList, $checked = null);
+    public function filterOrders($statusList, $start_date = null, $end_date = null);
 }
