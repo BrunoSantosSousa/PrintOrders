@@ -3,18 +3,16 @@ import List from '@material-ui/core/List'
 import Stepper from '../Stepper'
 
 export default function StepperList(props) {
-    const { pagination, fetchData } = props
+    const { pagination, fetchDataParams, setFetchDataParams, fetchData } = props
 
     const handleNext = () => {
-        fetchData({
-            page : pagination.next
-        })
+        setFetchDataParams({ ...fetchDataParams, page: pagination.next })
+        fetchData()
     }
 
     const handleBack = () => {
-        fetchData({
-            page: pagination.back
-        })
+        setFetchDataParams({...fetchDataParams, page: pagination.back})
+        fetchData()
     }
 
     return (
