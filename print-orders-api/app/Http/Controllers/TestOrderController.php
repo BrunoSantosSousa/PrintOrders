@@ -5,15 +5,29 @@ use Illuminate\Http\Request;
 use App\Http\RequestRules\TestOrderRequestRule;
 use App\TestOrder;
 use App\Services\IOrderService;
+use App\Order;
+use App\Http\Resources\TestOrderResource as Resource;
 
 class TestOrderController extends Controller
 {
     private $orderService = null;
+    private $resource = null;
 
     public function __construct()
     {
         parent::__construct(app(TestOrderRequestRule::class));
         $this->orderService = app(IOrderService::class);
+        $this->resource = app(Resource::class);
+    }
+
+    public function show(Request $request, $orderId)
+    {
+        $joins = [
+            'grade',
+            'test_order'
+        ];
+        $order = Order::with($joins)->find($orderId);
+        return $this->resource->format($order);
     }
 
     public function post(Request $request)

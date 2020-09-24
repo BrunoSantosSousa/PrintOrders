@@ -5,16 +5,30 @@ use Illuminate\Http\Request;
 use App\Http\RequestRules\XeroxOrderRequestRule;
 use App\XeroxOrder;
 use App\Services\IOrderService;
+use App\Order;
+use App\Http\Resources\XeroxOrderResource as Resource;
 
 
 class XeroxOrderController extends Controller
 {
     private $orderService = null;
+    private $resource = null;
 
     public function __construct()
     {
         parent::__construct(app(XeroxOrderRequestRule::class));
         $this->orderService = app(IOrderService::class);
+        $this->resource = app(Resource::class);
+    }
+
+    public function show(Request $request, $orderId)
+    {
+        $joins = [
+            'grade',
+            'xerox_order'
+        ];
+        $order = Order::with($joins)->find($orderId);
+        return $this->resource->format($order);
     }
 
     public function post(Request $request)
