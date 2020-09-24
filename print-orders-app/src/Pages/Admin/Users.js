@@ -34,11 +34,10 @@ import IconButton from '@material-ui/core/IconButton'
 import PersonIcon from '@material-ui/icons/Person'
 import DeleteIcon from '@material-ui/icons/Delete'
 import EditIcon from '@material-ui/icons/Edit'
-import CircularProgress from '@material-ui/core/CircularProgress'
 import makeConnection from '../../Connection'
 import { makePagination } from '../../Layout/Stepper'
 import StepperList from '../../Layout/StepperList'
-
+import Loading from '../../Layout/Loading'
 import Config from '../../config'
 
 const useUserFormStyles = makeStyles({
@@ -75,20 +74,6 @@ function UserForm(props) {
     )
 }
 
-const useLoadingStyles = makeStyles(theme => ({
-    root: {
-        marginTop: theme.spacing(2)
-    }
-}))
-
-function Loading() {
-    const classes = useLoadingStyles()
-    return (
-        <Box display="flex" justifyContent="center" className={classes.root}>
-            <CircularProgress />
-        </Box>
-    )
-}
 
 function NewUserDialog(props) {
     const {open, setOpen, handleRegister} = props
@@ -353,7 +338,13 @@ function UserItem(props) {
 }
 
 function UserList(props) {
-    const { records, pagination, fetchData, handleEditItem } = props
+    const { 
+        records, 
+        pagination, 
+        fetchData, 
+        fetchDataParams, 
+        setFetchDataParams, 
+        handleEditItem } = props
     return (
         <>
             <StepperList pagination={pagination} fetchData={fetchData}>
@@ -370,6 +361,7 @@ export default function Users(props) {
     const [newUserDialogOpen, setNewUserDialogOpen] = useState(false)
     const [records, setRecords] = useState([])
     const [editItemState, setEditItemState] = useState({})
+    const [fetchDataParams, setFetchDataParams] = useState({})
     const [loading, setLoading] = useState(true)
     const [pagination, setPagination] = useState({
         steps: 1,
@@ -384,11 +376,9 @@ export default function Users(props) {
 
     const handleNewUserClick = () => setNewUserDialogOpen(true)
 
-    const fetchData = async (param = null) => {
-        if(!loading) {
-            setLoading(true)
-        }
-        const response = await userConnection.get(param)
+    const fetchData = async () => {
+        setLoading(true)
+        const response = await userConnection.get(fetchDataParams)
         setPagination(makePagination(response))
         setRecords(response.data)
         setLoading(false)
@@ -470,6 +460,8 @@ export default function Users(props) {
                         records={records}
                         pagination={pagination}
                         fetchData={fetchData}
+                        fetchDataParams={fetchDataParams}
+                        setFetchDataParams={setFetchDataParams}
                         handleEditItem={handleEditItem}
                     /> 
             }           
