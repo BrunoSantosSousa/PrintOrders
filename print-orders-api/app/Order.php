@@ -15,4 +15,23 @@ class Order extends Model
         'delivery_date'
     ];
 
+    public function grade()
+    {
+        return $this->belongsTo(Grade::class);
+    }
+
+    public function test_order()
+    {
+        return $this->hasOne(TestOrder::class);
+    }
+
+    public function book_order()
+    {
+        return $this->hasOne(BookOrder::class);
+    }
+
+    public function xerox_order()
+    {
+        return $this->hasOne(XeroxOrder::class);
+    }
 }
