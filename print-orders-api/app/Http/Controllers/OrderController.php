@@ -21,16 +21,18 @@ class OrderController extends Controller
     {
         try {
             $statusList = [];
-            $checked = null;
+            $start_date = null;
+            $end_date = null;
             if($request->has('status')) {
                 array_push($statusList, $request->input('status'));
             }
-            if($request->has('checked')) {
-                $checked = $request->input('checked');
+            if($request->has('start_date') && $request->has('end_date')) {
+                $start_date = $request->input('start_date');
+                $end_date = $request->input('end_date');
             }
-            return $this->orderService->filterOrders($statusList, $checked);
+            return $this->orderService->filterOrders($statusList, $start_date, $end_date);
         } catch(\Exception $e) {
-            return response()->json(['message' => "Failed to load order's data."]);
+            return response()->json(['message' => "Failed to load order's data.", 'stack' => $e->getMessage()]);
         }
     }
 }
